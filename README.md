@@ -1,0 +1,2 @@
+# msgcraft
+Messaging Automation application
