@@ -34,7 +34,7 @@ export default function SignInForm() {
     onSuccess: (data) => {
       // localStorage.setItem("token", data.token);
       Cookies.set("token", data.token, { expires: 60 * 60 * 24 }); // in seconds
-      if(data.customerId){
+      if(data.customerId!==null){
         localStorage.setItem("customerId", data.customerId);
       }
       localStorage.setItem("name", data.name);
