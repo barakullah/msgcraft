@@ -17,7 +17,7 @@ export default function ClientsPage() {
   const [copiedIndex, setCopiedIndex] = useState<string|null>();
   const [clientSecret, setClientSecret] = useState<string>();
   let customerId=localStorage.getItem("customerId")
-  customerId=customerId===null?"":customerId
+  customerId=(customerId===null|| customerId==="null")?"":customerId
   const name=localStorage.getItem("name")??"";
   const email=localStorage.getItem("email")??"";
   const userId=localStorage.getItem("userId")??"";
