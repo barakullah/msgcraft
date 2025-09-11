@@ -1,5 +1,4 @@
-import Cookies from "cookies-js";
-const token=Cookies.get("token")
+
 export async function getSubscriptionStatus(clientId: string, token: string) {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/clients/${clientId}/subscription_status`,
@@ -14,8 +13,9 @@ export async function getSubscriptionStatus(clientId: string, token: string) {
   }
   
   export async function createCheckoutSession(
-    instanceId: string,
-    token: string
+    instanceId?: string,
+    token?: string,
+    quantity?:number
   ) {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/billing/create-subscription`,
@@ -27,6 +27,7 @@ export async function getSubscriptionStatus(clientId: string, token: string) {
         },
         body: JSON.stringify({
           instanceId,
+          quantity
         }),
       }
     );
@@ -40,7 +41,7 @@ export async function getSubscriptionStatus(clientId: string, token: string) {
   
   //fetch secret to save payment method
 
-  export async function getSetupIntent(name:string,email:string,customerId:string,userId:number) {
+  export async function getSetupIntent( token: string,name:string,email:string,customerId:string,userId:number) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/billing/create-customer`, {
       method: "POST",
       body: JSON.stringify({
@@ -58,7 +59,7 @@ export async function getSubscriptionStatus(clientId: string, token: string) {
     return res.json();
   }
 
-  export async function savePaymentMethod(paymentMethodId:string,customerId:string,userId:number) {
+  export async function savePaymentMethod(token:string,paymentMethodId:string,customerId:string,userId:number) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/billing/save-payment-method`, {
       method: "POST",
       body: JSON.stringify({

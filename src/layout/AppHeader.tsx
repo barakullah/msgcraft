@@ -1,17 +1,20 @@
 "use client";
+import PayForInstances from "@/components/payments/PayForInstances";
 import { ThemeToggleButton } from "@/components/common/ThemeToggleButton";
-import NotificationDropdown from "@/components/header/NotificationDropdown";
 import UserDropdown from "@/components/header/UserDropdown";
+import { useModalContext } from "@/context/ModalContext";
 import { useSidebar } from "@/context/SidebarContext";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState ,useEffect,useRef} from "react";
+import React, { useEffect, useRef, useState } from "react";
+import SaveCardModal from "@/components/payments/AddCardModal";
 
 const AppHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
+  const {open,openModal,closeModal}=useModalContext()
 
+  const [openPayModal,setOpenPayModal]=useState<boolean>(false)
   const { isMobileOpen, toggleSidebar, toggleMobileSidebar } = useSidebar();
-
   const handleToggle = () => {
     if (window.innerWidth >= 1024) {
       toggleSidebar();
@@ -19,7 +22,9 @@ const AppHeader: React.FC = () => {
       toggleMobileSidebar();
     }
   };
-
+  const closePayModal=()=>{
+    setOpenPayModal(false)
+}
   const toggleApplicationMenu = () => {
     setApplicationMenuOpen(!isApplicationMenuOpen);
   };
@@ -41,11 +46,11 @@ const AppHeader: React.FC = () => {
   }, []);
 
   return (
-    <header className="sticky top-0 flex w-full bg-white border-gray-200 z-99999 dark:border-gray-800 dark:bg-gray-900 lg:border-b">
+    <header className="sticky  top-0 flex w-full bg-white border-gray-200 z-[0] dark:border-gray-800 dark:bg-gray-900 lg:border-b">
       <div className="flex flex-col items-center justify-between grow lg:flex-row lg:px-6">
         <div className="flex items-center justify-between w-full gap-2 px-3 py-3 border-b border-gray-200 dark:border-gray-800 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-4">
           <button
-            className="items-center justify-center w-10 h-10 text-gray-500 border-gray-200 rounded-lg z-99999 dark:border-gray-800 lg:flex dark:text-gray-400 lg:h-11 lg:w-11 lg:border"
+            className="items-center justify-center w-10 h-10 text-gray-500 border-gray-200 rounded-lg z-[0] dark:border-gray-800 lg:flex dark:text-gray-400 lg:h-11 lg:w-11 lg:border"
             onClick={handleToggle}
             aria-label="Toggle Sidebar"
           >
@@ -88,14 +93,14 @@ const AppHeader: React.FC = () => {
               width={154}
               height={32}
               className="dark:hidden"
-              src="./images/logo/logo.svg"
+              src="./images/logo/MsgCraftBlack.svg"
               alt="Logo"
             />
             <Image
               width={154}
               height={32}
               className="hidden dark:block"
-              src="./images/logo/logo-dark.svg"
+              src="./images/logo/MsgCraft.svg"
               alt="Logo"
             />
           </Link>
@@ -154,18 +159,30 @@ const AppHeader: React.FC = () => {
               </div>
             </form>
           </div>
+          <button
+        onClick={openModal}
+        className="bg-brand-600 text-white px-5 py-2 rounded-xl hover:bg-brand-600 disabled:opacity-50"
+      >
+        Add Payment Method
+        </button>
+        <button
+        onClick={()=>setOpenPayModal(true)}
+        className="bg-brand-600 text-white px-5 py-2 rounded-xl hover:bg-brand-600 disabled:opacity-50"
+      >
+        Pay for Instances
+        </button>
         </div>
         <div
           className={`${
             isApplicationMenuOpen ? "flex" : "hidden"
-          } items-center justify-between w-full gap-4 px-5 py-4 lg:flex shadow-theme-md lg:justify-end lg:px-0 lg:shadow-none`}
+          } items-center justify-between w-full gap-4 px-5 py-4 lg:shrink-2 lg:flex shadow-theme-md lg:justify-end lg:px-0 lg:shadow-none`}
         >
           <div className="flex items-center gap-2 2xsm:gap-3">
             {/* <!-- Dark Mode Toggler --> */}
             <ThemeToggleButton />
             {/* <!-- Dark Mode Toggler --> */}
 
-           <NotificationDropdown /> 
+           {/* <NotificationDropdown />  */}
             {/* <!-- Notification Menu Area --> */}
           </div>
           {/* <!-- User Area --> */}
@@ -173,6 +190,16 @@ const AppHeader: React.FC = () => {
     
         </div>
       </div>
+    <PayForInstances
+    isOpen={openPayModal} 
+    onClose={closePayModal} 
+  />
+  {open  && (
+    <SaveCardModal
+    open={open} 
+    onClose={closeModal} 
+  />
+)}
     </header>
   );
 };

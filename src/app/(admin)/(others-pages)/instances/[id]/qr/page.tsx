@@ -9,6 +9,12 @@ import { useParams } from "next/navigation";
 import { QRCodeCanvas } from 'qrcode.react';
 import { useEffect, useState } from "react";
 import Cookies from "cookies-js";
+// import { Metadata } from "next";
+// export const metadata: Metadata = {
+//   title: "Instance Details | MsgCraft - Whatsapp Automation Service ",
+//   description: "Instance Details| MsgCraft - Whatsapp Automation Service",
+//   // other metadata
+// };
 export default function QRPage() {
   const { id } = useParams();
   const [isConnected,setIsConnected]=useState(false)

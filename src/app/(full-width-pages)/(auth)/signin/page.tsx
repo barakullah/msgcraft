@@ -2,8 +2,8 @@ import SignInForm from "@/components/auth/SignInForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Next.js SignIn Page | TailAdmin - Next.js Dashboard Template",
-  description: "This is Next.js Signin Page TailAdmin Dashboard Template",
+  title: "SignIn Page | MsgCraft - Whatsapp Automation Service ",
+  description: "SignIn Page | MsgCraft - Whatsapp Automation Service",
 };
 
 export default function SignIn() {

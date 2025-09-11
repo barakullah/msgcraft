@@ -38,18 +38,24 @@
   --color-white: #ffffff;
   --color-black: #101828;
 
+  /* signgin page brand tag line color */
+  --color-brand-tagline:#439391
+
   --color-brand-25: #f2f7ff;
-  --color-brand-50: #ecf3ff;
+  /* active menu item background color in dashboard */
+  --color-brand-50: #d7f4e8;
   --color-brand-100: #dde9ff;
   --color-brand-200: #c2d6ff;
   --color-brand-300: #9cb9ff;
   --color-brand-400: #7592ff;
-  --color-brand-500: #465fff;
-  --color-brand-600: #3641f5;
+  /* buttons color */
+  --color-brand-500: #00a05f; 
+  /* buttons hovor color */
+  --color-brand-600: #008750;
   --color-brand-700: #2a31d8;
   --color-brand-800: #252dae;
   --color-brand-900: #262e89;
-  --color-brand-950: #161950;
+  --color-brand-950: #065a57;
 
   --color-blue-light-25: #f5fbff;
   --color-blue-light-50: #f0f9ff;
@@ -62,6 +68,7 @@
   --color-blue-light-700: #026aa2;
   --color-blue-light-800: #065986;
   --color-blue-light-900: #0b4a6f;
+  /* signin bg color */
   --color-blue-light-950: #062c41;
 
   --color-gray-25: #fcfcfd;
@@ -276,7 +283,7 @@
 }
 
 .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #344054;
+  background-color: #1f7370;
 }
 
 
@@ -737,4 +744,10 @@ span.flatpickr-weekday,
     0 1px 2px 0 rgba(16, 24, 40, 0.06);
   opacity: 0.8;
   cursor: grabbing; /* Changes the cursor to indicate dragging */
+}
+.colorBrandTagline{
+  color:#439391
+}
+.textColorGreen{
+  color:#00a05f
 }

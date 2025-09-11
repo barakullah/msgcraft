@@ -4,6 +4,8 @@
 import { useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { savePaymentMethod } from "@/lib/api";
+import Cookies from "cookies-js";
+
 interface SaveCardFormProps {
     clientSecret: string;
   }
@@ -13,7 +15,7 @@ export default function SaveCardForm({clientSecret}:SaveCardFormProps) {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const userId=localStorage.getItem("userId")??"";
-
+  const token=Cookies.get("token")
   const handleSaveCard = async () => {
     if (!stripe || !elements) return;
 
@@ -36,7 +38,7 @@ export default function SaveCardForm({clientSecret}:SaveCardFormProps) {
      
     } else {
       setStatus("Card saved successfully ✅");
-      await savePaymentMethod(setupIntent?.payment_method,localStorage.getItem("customerId")??"",parseInt(userId))
+      await savePaymentMethod(token,setupIntent?.payment_method,localStorage.getItem("customerId")??"",parseInt(userId))
       console.log("Saved payment method:", setupIntent?.payment_method);
     }
 
@@ -68,7 +70,7 @@ export default function SaveCardForm({clientSecret}:SaveCardFormProps) {
       <button
         onClick={handleSaveCard}
         disabled={loading || !stripe}
-        className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+        className="w-full px-4 py-2 bg-brand-500 text-white rounded hover:bg-brand-600 disabled:opacity-50"
       >
         {loading ? "Saving..." : "Save Payment Method"}
       </button>

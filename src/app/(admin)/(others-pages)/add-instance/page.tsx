@@ -3,6 +3,13 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import Cookies from "cookies-js";
+// import { Metadata } from "next";
+
+// export const metadata: Metadata = {
+//   title: "Add Instance Page | MsgCraft - Whatsapp Automation Service ",
+//   description: "Add Instance Page | MsgCraft - Whatsapp Automation Service",
+//   // other metadata
+// };
 export default function AddInstanceForm() {
   const [name, setName] = useState("");
   const router = useRouter();
@@ -41,7 +48,7 @@ export default function AddInstanceForm() {
       <button
         onClick={() => mutation.mutate({name})}
         disabled={!name || mutation.isPending}
-        className="mt-4 bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 disabled:opacity-50"
+        className="mt-4 bg-brand-600 text-white px-5 py-2 rounded-xl hover:bg-brand-600 disabled:opacity-50"
       >
         {mutation.isPending ? "Adding..." : "Add Instance"}
       </button>
