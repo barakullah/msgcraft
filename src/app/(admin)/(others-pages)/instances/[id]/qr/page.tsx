@@ -17,11 +17,12 @@ import Cookies from "cookies-js";
 // };
 export default function QRPage() {
   const { id } = useParams();
+  const token=Cookies.get("token")
   const [isConnected,setIsConnected]=useState(false)
   const [loadingPayment, setLoadingPayment] = useState(false);
   const { data:subscribedData, isLoading } = useQuery({
     queryKey: ["subscription-status", id],
-    queryFn: () => getSubscriptionStatus(id as string, Cookies.get("token")!),
+    queryFn: () => getSubscriptionStatus(id as string, token!),
   });
     // 1. Fetch client status first
     const {
@@ -35,7 +36,7 @@ export default function QRPage() {
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/clients/${id}/status`,
           {
             headers: {
-              Authorization: `Bearer ${Cookies.get("token")}`,
+              Authorization: `Bearer ${token}`,
             }}
         );
         return res.json();
@@ -51,7 +52,7 @@ export default function QRPage() {
     queryFn: async () => {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/clients/${id}/qr`, {
         headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
+          Authorization: `Bearer ${token}`,
         }},);
       return res.json();
     },
@@ -68,7 +69,7 @@ export default function QRPage() {
     queryFn: async () => {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/messages/${id}/message-stats`,   {
         headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       return res.json();
@@ -106,7 +107,7 @@ export default function QRPage() {
     try {
       setLoadingPayment(true);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const data:any = await createCheckoutSession(id as string, Cookies.get("token")!);
+      const data:any = await createCheckoutSession(id as string, token!);
       if(data){
         window.location.reload();
 

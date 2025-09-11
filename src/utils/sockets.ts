@@ -1,6 +1,9 @@
 // utils/socket.js
 import { io } from "socket.io-client";
 
-const socket = io("https://api.msgcart.net/ws");
+const socket = io("https://api.msgcart.net", {
+    path: "/ws",
+    transports: ["websocket"],
+  });// const socket = io("http:localhost:4000");
 
 export default socket;
