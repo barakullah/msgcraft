@@ -5,11 +5,13 @@ import { useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { savePaymentMethod } from "@/lib/api";
 import Cookies from "cookies-js";
+import toast from "react-hot-toast";
 
 interface SaveCardFormProps {
     clientSecret: string;
+    onClose: () => void;
   }
-export default function SaveCardForm({clientSecret}:SaveCardFormProps) {
+export default function SaveCardForm({clientSecret,onClose}:SaveCardFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
@@ -31,14 +33,19 @@ export default function SaveCardForm({clientSecret}:SaveCardFormProps) {
     const { setupIntent, error }:any = await stripe.confirmCardSetup(clientSecret, {
         payment_method: { card: cardElement },
       });
-      
+
 
     if (error) {
       setStatus(error.message || "Failed to save card ❌");
+      toast.error("Failed to save card ");
+
      
     } else {
       setStatus("Card saved successfully ✅");
+      toast.success("Card saved successfully");
       await savePaymentMethod(token,setupIntent?.payment_method,localStorage.getItem("customerId")??"",parseInt(userId))
+      setTimeout(() =>onClose(), 2000);
+      
       console.log("Saved payment method:", setupIntent?.payment_method);
     }
 

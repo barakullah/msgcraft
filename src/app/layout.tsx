@@ -2,7 +2,7 @@
 
 import { Outfit } from 'next/font/google';
 import './globals.css';
-
+import { Toaster } from "react-hot-toast";
 import { SidebarProvider } from '@/context/SidebarContext';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -25,6 +25,7 @@ export default function RootLayout({
         <ModalProvider>
         <ThemeProvider>
           <SidebarProvider>{children}</SidebarProvider>
+          <Toaster position="top-right" reverseOrder={false} />
         </ThemeProvider>
         </ModalProvider>
         </QueryClientProvider>

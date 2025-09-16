@@ -4,7 +4,7 @@ import { createCheckoutSession } from "@/lib/api";
 import { useState } from "react";
 import Cookies from "cookies-js";
 import { createPortal } from "react-dom";
-
+import toast from "react-hot-toast"
 interface InstanceModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -22,7 +22,15 @@ export default function InstanceModal({ isOpen, onClose }: InstanceModalProps) {
 
   const handlePayments = async () => {
     setLoading(true)
-      await createCheckoutSession(undefined,Cookies.get("token"),quantity)
+     const data= await createCheckoutSession(undefined,Cookies.get("token"),quantity)
+     if(data?.success){
+      onClose()
+      toast.success("Payment processed successfully !");
+     }
+     else{
+      toast.error("Payment cannot be processed!");
+
+     }
     setLoading(false)
 
   };
@@ -62,15 +70,19 @@ export default function InstanceModal({ isOpen, onClose }: InstanceModalProps) {
             <span className="font-medium">{quantity}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-600">Active Instances:</span>
-            <span className="font-medium text-green-600">{1}</span>
+            <span className="text-gray-600">Price per instance:</span>
+            <span className="font-medium text-gray-700">${22}</span>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between mb-2">
+            <span className="text-gray-600">Total price:</span>
+            <span className="font-medium text-green-600">${quantity * 22}</span>
+          </div>
+          {/* <div className="flex justify-between">
             <span className="text-gray-600">Inactive Instances:</span>
             <span className="font-medium text-red-600">
               {quantity > 0 ? quantity - 1 : 0}
             </span>
-          </div>
+          </div> */}
         </div>
         <button
         onClick={handlePayments}

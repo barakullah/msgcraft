@@ -56,7 +56,7 @@ fetchData();
 
         {/* Stripe form */}
         <Elements stripe={stripePromise} >
-    <SaveCardForm clientSecret={clientSecret}/>
+    <SaveCardForm clientSecret={clientSecret} onClose={onClose}/>
   </Elements>
       </div>
     </div>,document.body
